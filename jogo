@@ -1,0 +1,261 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+void forca(int estado){
+    if(estado == 0){
+        printf("--------------");
+        printf("\n|            |");
+        printf("\n|");
+        printf("\n|");
+        printf("\n|");
+        printf("\n|");
+        printf("\n|");
+    }
+     else if(estado == 1){
+        printf("--------------");
+        printf("\n|            |");
+        printf("\n|            o");
+        printf("\n|");
+        printf("\n|");
+        printf("\n|");
+        printf("\n|");
+     }
+     else if(estado == 2){
+        printf("--------------");
+        printf("\n|            |");
+        printf("\n|            o");
+        printf("\n|            |");
+        printf("\n|");
+        printf("\n|");
+        printf("\n|");
+     }
+     else if(estado == 3){
+        printf("--------------");
+        printf("\n|            |");
+        printf("\n|            o");
+        printf("\n|           -|");
+        printf("\n|");
+        printf("\n|");
+        printf("\n|");
+     }
+     else if(estado == 4){
+        printf("--------------");
+        printf("\n|            |");
+        printf("\n|            o");
+        printf("\n|           -|-");
+        printf("\n|");
+        printf("\n|");
+        printf("\n|");
+     }
+     else if(estado == 5){
+        printf("--------------");
+        printf("\n|            |");
+        printf("\n|            o");
+        printf("\n|           -|-");
+        printf("\n|           / ");
+        printf("\n|");
+        printf("\n|");
+     }
+     else if(estado == 6){
+        printf("--------------");
+        printf("\n|            |");
+        printf("\n|            o");
+        printf("\n|           -|-");
+        printf("\n|           / \\");
+        printf("\n|");
+        printf("\n| \n      GAME OVER\n\n");
+     }
+}
+
+void grande_vencedor(int vencedor1, int erros1, int vencedor2, int erros2){
+
+    if((vencedor1>0)||(vencedor2>0)){
+            if(vencedor1>vencedor2){
+                printf("\nO Jogador numero 1 foi o vencedor da partida!\n\n");
+            }
+            else if(vencedor1<vencedor2){
+                printf("\nO Jogador numero 2 foi o vencedor da partida!\n\n");
+            }
+            else{
+                if(erros1>0 || erros2>0){
+                    if(erros1<erros2){
+                        printf("\nO Jogador numero 1 foi o vencedor da partida!\n\n");
+                    }
+                    else if(erros1>erros2){
+                        printf("\nO Jogador numero 2 foi o vencedor da partida!\n\n");
+                    }
+                else{
+                    printf("\nPartida empatada, tente novamente!\n\n");
+                }
+
+                }
+                else{
+                    printf("\nPartida empatada, tente novamente!\n\n");
+                }
+            }
+       }
+       else{
+        printf("Ambos os competidores perderam a rodada\n\n");
+       }
+}
+
+int main(){
+/*
+int op;
+        printf(">>> JOGO DA FORCA <<<\n\n");
+        printf("Escolha opcao:\n");
+        printtf("1-SOLO\n");
+        printf("2- MULTIPLAYERS\n");
+        printf("3- regras do jodo\n");
+        scanf("%i", &op);
+
+        switch (op){
+
+    case 1:
+*/
+
+    char chave[100];
+    char confirmacao[3];
+    int vencedor1=0;
+    int erros1=0;
+    char c_aberta[100];
+    char letra;
+    int N_erros=0;
+    int possivel_erro=1; //1-sim e 0- não
+    char dica[15];
+
+        printf("-------Multiplayer-------\n\n");
+        printf("Jogador 1\n");
+        printf("Palavra secreta:");
+        fgets(chave, 100, stdin);
+        fflush(stdin);
+        printf("Digite tema:");
+        fgets(dica, 15, stdin);
+        fflush(stdin);
+        printf("A palavra secreta digitada é: %s", chave);
+        printf("A palavra possui %lu caracteres\n\n", (strlen(chave)-1));
+
+        chave[strlen(chave)-1] = '\0';
+        strcpy(c_aberta, chave);
+
+       for(int i=0; i<strlen(c_aberta); i++){
+            c_aberta[i]='_';
+       }
+
+       while(1){
+            printf("\n      %s",dica);
+            forca(N_erros);
+            printf("\nPalavra: ");
+            for(int i=0; i<strlen(c_aberta); i++){
+                printf(" %c", c_aberta[i]);
+       }
+
+       printf("\nLetra: ");
+
+       scanf(" %c", &letra);
+        possivel_erro=1;
+       for(int i=0; i<strlen(c_aberta); i++){
+            if(letra == chave[i]){
+               c_aberta[i] = letra;
+               possivel_erro=0;
+            }
+
+       }
+        if(possivel_erro == 1){
+            N_erros++;
+        }
+        erros1 = N_erros;
+        system("cls");
+        if(strcmp(chave,c_aberta) == 0){
+        forca(N_erros);
+        printf("Palavra: %s", c_aberta);
+            printf("\n\n            YOU WIN!\n\n");
+            vencedor1 =1;
+            break;
+        }
+
+        if(N_erros==6){
+            forca(N_erros);
+            printf("A palavra chave era: %s\n\n", chave);
+            vencedor1 = 0;
+            break;
+        }
+       }
+
+//SEGUNDO JOGADOR
+
+int vencedor2;
+int erros2;
+char chave1[100];
+char c_aberta1[100];
+char possivel_erro1 = 1;
+int N_erros1=0;
+char letra1;
+
+ printf("Jogador 2\n");
+        fflush(stdin);
+        printf("Palavra secreta:");
+        fgets(chave1, 100, stdin);
+        printf("Digite tema:");
+        fgets(dica, 15, stdin);
+        fflush(stdin);
+        printf("A palavra secreta digitada é: %s", chave1);
+        printf("A palavra possui %lu caracteres\n\n", (strlen(chave1)-1));
+
+
+
+        chave1[strlen(chave1)-1] = '\0';
+
+       strcpy(c_aberta1, chave1);
+
+       for(int i=0; i<strlen(c_aberta1); i++){
+        c_aberta1[i]='_';
+
+       }
+
+       while(1){
+            printf("\n      %s",dica);
+            forca(N_erros1);
+            printf("\nPalavra: ");
+            for(int i=0; i<strlen(c_aberta1); i++){
+                printf("%c ", c_aberta1[i]);
+            }
+            printf("\nLetra: ");
+            scanf(" %c", &letra1);
+
+       for(int i=0; i<strlen(c_aberta1); i++){
+            if(letra1 == chave1[i]){
+               c_aberta1[i] = letra1;
+               possivel_erro1=0;
+            }
+       }
+        if(possivel_erro1 == 1){
+            N_erros1++;
+        }
+        erros2 = N_erros1;
+
+        if(strcmp(chave1,c_aberta1) == 0){
+        forca(N_erros1);
+        printf("\nPalavra: %s", c_aberta1);
+            printf("\n\n            YOU WIN!\n\n");
+            vencedor2 =1;
+            break;
+        }
+
+        if(N_erros1==6){
+            forca(N_erros1);
+            printf("A palavra chave era: %s\n\n", chave1);
+            vencedor2 = 0;
+            break;
+        }
+
+       }
+
+// GRANDE VENCEDOR
+
+   grande_vencedor(vencedor1,erros1,vencedor2,erros2);
+
+return 0;
+}
+
